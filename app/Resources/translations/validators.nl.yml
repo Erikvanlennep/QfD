@@ -1,0 +1,23 @@
+#Pages under view/Category, the CategoryController and the CategoryType
+category:
+    form:
+        notification:
+            too-short: De categorie moet langer zijn dan {{ limit }} tekens
+            too-long: De categorie mag maximaal {{ limit }} tekens bevatten
+
+#Pages under view/Profile, the ProfileController and the ProfileFormType
+profile:
+    invite:
+        notification:
+            email: het email adress '{{ value }}' is niet correct.
+    register:
+        notification:
+            name:
+                too-short: De voornaam moet uit minstens {{ limit }} karakters bestaan
+                too-long: De voornaam moet korter zijn dan {{ limit }} karakters
+            prefix:
+                too-short: Het tussenvoegsel moet uit minstens {{ limit }} karakters bestaan
+                too-long: Het tussenvoegsel moet korter zijn dan {{ limit }} karakters
+            lastname:
+                too-short: De achternaam moet uit minstens {{ limit }} karakters bestaan
+                too-long: De achternaam moet korter zijn dan {{ limit }} karakters
