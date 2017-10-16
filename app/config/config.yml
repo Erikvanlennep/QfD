@@ -76,3 +76,6 @@ fos_user:
     from_email:
         address: "test@test.nl"
         sender_name: "test@test.nl"
+    registration:
+                form:
+                    type: AppBundle\Form\DeveloperType
