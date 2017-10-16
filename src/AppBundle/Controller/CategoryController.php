@@ -22,7 +22,6 @@ class CategoryController extends Controller
      * Lists all category entities.
      *
      * @Route("/", name="category_index")
-     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -53,39 +52,13 @@ class CategoryController extends Controller
 
         $form = $this->createForm('AppBundle\Form\CategoryType', $category, array(
             'action' => $this->generateUrl('category_index'),
-            'attr' => array('class' => 'form-inline'),
+            'attr' => array('class' => 'form-inline text-center'),
             'method' => 'POST',
         ));
 
         $form->add('submit', SubmitType::class, array('label' => 'create'));
 
         return $form;
-    }
-
-    /**
-     * Creates a new category entity.
-     *
-     * @Route("/new", name="category_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        $category = new Category();
-        $form = $this->createForm('AppBundle\Form\CategoryType', $category);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
-            $em->flush();
-
-            return $this->redirectToRoute('category_show', array('id' => $category->getId()));
-        }
-
-        return $this->render('category/new.html.twig', array(
-            'category' => $category,
-            'form' => $form->createView(),
-        ));
     }
     
     /**
@@ -130,17 +103,6 @@ class CategoryController extends Controller
         $em->remove($entity);
         $em->flush();
         return $this->redirectToRoute('category_index');
-
-//        $form = $this->createDeleteForm($category);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $em = $this->getDoctrine()->getManager();
-//            $em->remove($category);
-//            $em->flush();
-//        }
-//
-//        return $this->redirectToRoute('category_index');
     }
 
     /**

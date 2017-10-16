@@ -19,10 +19,11 @@ class CategoryType extends AbstractType
             ->add('category', TextType::class, array(
                 'label' => false,
                 'attr' => array(
-                    'class' => 'col-sm-8',
+                    'class' => 'col-md-8',
                     'placeholder' => 'category.form.add',
                 ),
-            ));
+            ))
+            ->add('submit', SubmitType::class, array('label' => 'create'));
     }
 
     /**
