@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block title %}QfD - {{ 'base.menu.profile'|trans }}{% endblock %}
+
+    {% block content %}
+        <div class="jumbotron square">
+            {% block profileContent %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+{% block formContent %}
+    <ul>
+        <li class="form-group">
+            <a href="#">
+                <button type="button" class="btn btn-default btn-lg btn-block">{{ 'profile.menu.unanswered' | trans }}</button>
+            </a>
+        </li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="form-group">
+                <a href="#">
+                    <button type="button" class="btn btn-default btn-lg btn-block">{{ 'profile.menu.newDev' | trans }}
+                    </button>
+                </a>
+            </li>
+            <li class="form-group">
+                <a href="#">
+                    <button type="button" class="btn btn-default btn-lg btn-block">{{ 'profile.menu.categories' | trans }}
+                    </button>
+                </a>
+            </li>
+
+        {% endif %}
+        <li class="form-group">
+            <a href="#">
+                <button type="button" class="btn btn-default btn-lg btn-block">{{ 'profile.menu.answered' | trans }}</button>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <button type="button" class="btn btn-default btn-lg btn-block">{{ 'profile.menu.profile.edit' | trans }}</button>
+            </a>
+        </li>
+        <li class="form-group text-right">
+            <a href="#">
+                <button type="button" class="btn btn-default btn-sm btn-lower">{{ 'profile.general.logout' | trans }}</button>
+            </a>
+
+        </li>
+    </ul>
+{% endblock %}

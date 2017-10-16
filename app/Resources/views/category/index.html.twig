@@ -1,40 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'cms_layout.html.twig' %}
 
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block title %}Category{% endblock %}
 
-{% block content %}
+{% block profileContent %}
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
-    <table class="table table-hover">
+    <table class="records_list table table-condensed">
         <thead>
-            <tr>
-                <th class="col-xs-12 col-md-10">Categorie</th>
-            </tr>
+        <tr>
+            <th class="col-xs-12 col-md-10">{{ 'profile.menu.categories'|trans }}</th>
+        </tr>
         </thead>
         <tbody>
         {% for category in categories %}
             <tr>
                 <td>{{ category.category }}</td>
-                <td>
-                    <a href="{{ path('category_edit', { 'id': category.id }) }}" class="text-warning" title="Edit">
-                        <button type="button" class="btn btn-default">
-                            <i class="material-icons">edit</i>
+                <td class="text-right">
+                    <a href="{{ path('category_edit', { 'id': category.id }) }}" class="text-warning" title="{{ 'category.index.edit' |trans }}">
+                        <button type="button" class="btn btn-flat btn-round">
+                            <i class="mdi-content-create black"></i>
                         </button>
                     </a>
                 </td>
                 <td class="text-right">
-                    <a href="{{ path('category_delete', { 'id': category.id }) }}" class="text-danger" title="Delete">
-                        <button type="button" class="btn btn-default btn-danger">
-                            <i class="material-icons">delete</i>
+                    <a href="{{ path('category_delete', { 'id': category.id }) }}" class="text-danger" title="{{ 'category.index.delete' |trans }}">
+                        <button type="button" class="btn btn-flat btn-round btn-danger">
+                            <i class="mdi-action-delete"></i>
                         </button>
                     </a>
                 </td>
-
             </tr>
         {% endfor %}
         </tbody>
