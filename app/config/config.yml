@@ -79,3 +79,4 @@ fos_user:
     registration:
                 form:
                     type: AppBundle\Form\DeveloperType
+    use_username_form_type: false

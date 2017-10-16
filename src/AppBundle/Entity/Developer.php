@@ -64,7 +64,11 @@ class Developer extends BaseUser
      */
     protected $email;
 
-
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
 
     /**
      * Get id
@@ -151,10 +155,10 @@ class Developer extends BaseUser
      */
     public function setEmail($email)
     {
-        if (is_null($this->getUsername())) {
-            $this->setUsername($email);
-        }
+        $email = is_null($email) ? '' : $email;
+        parent::setEmail($email);
+        $this->setUsername($email);
 
-        return parent::setEmail($email);
+        return $this;
     }
 }
