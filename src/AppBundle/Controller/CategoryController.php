@@ -56,8 +56,6 @@ class CategoryController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', SubmitType::class, array('label' => 'create'));
-
         return $form;
     }
     

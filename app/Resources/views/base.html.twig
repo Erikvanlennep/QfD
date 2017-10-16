@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link href="{{ asset('bundles/app/css/style.css') }}" rel="stylesheet" type="text/css"/>
-
+    <script src="{{ asset('bundles/app/js/confirmDelete.js') }}"></script>
     {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
@@ -65,7 +65,6 @@
 
 {% block body %}
     <div class="container-fluid">
-        <div class="row">
             <div class="col-md-8">
                 {% block content %}{% endblock %}
             </div>
@@ -75,7 +74,6 @@
                     {% block sideContent %}{% endblock %}
                 </div>
             </div>
-        </div>
     </div>
 {% endblock %}
 
