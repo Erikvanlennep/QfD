@@ -27,16 +27,8 @@ class QuestionController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-//
-//        $questions = $em->getRepository('AppBundle:Question')->findAll();
-//
-//        return $this->render('question/index.html.twig', array(
-//            'questions' => $questions,
-//        ));
 
-        $questions = $em->getRepository('AppBundle:Question')->findAll();
-
-//        $questions = $this->get(QuestionService::class)->findAll();
+        $questions = $em->getRepository('AppBundle:Question')->findAllTest();
 
         $user = $this->getUser();
 
