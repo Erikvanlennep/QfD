@@ -3,13 +3,16 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Question;
+use AppBundle\Form\EditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\QuestionService;
+use Symfony\Component\Security\Acl\Exception\Exception;
 
 /**
  * Question controller.
@@ -87,14 +90,32 @@ class QuestionController extends Controller
      * @Route("/{id}", name="question_show")
      * @Method("GET")
      */
-    public function showAction(Question $question)
+    public function showAction(Request $request, Question $question)
     {
-        $deleteForm = $this->createDeleteForm($question);
 
-        return $this->render('question/show.html.twig', array(
-            'question' => $question,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $user = $this->getUser();
+
+        try {
+            $previousUrl = $this->redirect($request->headers->get('referer'));
+            $previousUrl = $previousUrl->getTargetUrl();
+        }catch (Exception $exception){
+            $previousUrl = $this->redirectToRoute('question_index');
+        }
+
+
+
+
+        $hasAnswer = $question->getAnswer();
+
+        if ($user == null and $hasAnswer == null) {
+            return $this->redirectToRoute('question_index');
+        } else {
+            return $this->render('question/show.html.twig', array(
+                'question' => $question,
+                'user' => $user,
+                'previous' => $previousUrl,
+            ));
+        }
     }
 
     /**
@@ -105,21 +126,38 @@ class QuestionController extends Controller
      */
     public function editAction(Request $request, Question $question)
     {
-        $deleteForm = $this->createDeleteForm($question);
-        $editForm = $this->createForm('AppBundle\Form\QuestionType', $question);
-        $editForm->handleRequest($request);
+        $label = $this->get('translator')->trans('question.general.edit');
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $user = $this->getUser();
 
-            return $this->redirectToRoute('question_edit', array('id' => $question->getId()));
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm('AppBundle\Form\EditType', $question);
+
+        if (!$question->getDeveloper()) {
+            $question->setDeveloper($user);
         }
 
-        return $this->render('question/edit.html.twig', array(
-            'question' => $question,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        if (($question->getDeveloper()->getId() == $user->getId()) || ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))) {
+
+            $form->add('answer', TextareaType::class, array(
+                'attr' => array('cols' => '5', 'rows' => '8')))
+                ->add($label, SubmitType::class);
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em->persist($question);
+                $em->flush();
+                return $this->redirectToRoute('question_index');
+            }
+
+            return $this->render('question/edit.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        } else {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
     }
 
     /**
@@ -183,7 +221,6 @@ class QuestionController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('question_delete', array('id' => $question->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

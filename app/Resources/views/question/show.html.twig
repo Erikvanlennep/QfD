@@ -1,64 +1,59 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Question - Detail{% endblock %}
+
 {% block body %}
-    <h1>Question</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ question.id }}</td>
-            </tr>
-            <tr>
-                <th>Question</th>
-                <td>{{ question.question }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ question.title }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{% if question.date %}{{ question.date|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Likes</th>
-                <td>{{ question.likes }}</td>
-            </tr>
-            <tr>
-                <th>Answer</th>
-                <td>{{ question.answer }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ question.city }}</td>
-            </tr>
-            <tr>
-                <th>Age</th>
-                <td>{{ question.age }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ question.email }}</td>
-            </tr>
-            <tr>
-                <th>Deleted</th>
-                <td>{% if question.deleted %}Yes{% else %}No{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container-fluid">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="jumbotron white">
 
-    <ul>
-        <li>
-            <a href="{{ path('question_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('question_edit', { 'id': question.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                <ul>
+                        <a href="{{ previous }}"><i class="mdi-navigation-arrow-back"></i></a>
+                        {% if (question.answer is null) and ((is_granted('ROLE_USER')) or (is_granted("ROLE_ADMIN"))) %}
+                            <a href="{{ path('question_edit',{'id':question.id}) }}" class="text-right">
+                                <button type="button"
+                                        class="btn btn-default btn-right">{{ 'question.detail.claim'|trans }}</button>
+                            </a>
+                        {% endif %}
+                        <h5>{{ 'question.labels.question'| trans }}</h5>
+                        <h2 class="big-fat-question">{{ question.title }}
+
+                            {% if (question.answer is not null) and (question.developer == user) or (is_granted('ROLE_ADMIN')) %}
+                                <a href="{{ path('question_edit',{'id':question.id}) }}"
+                                   title="{{ 'question.detail.buttons.edit.placeholder'| trans }}">
+                                    <button type="button" class="btn btn-flat btn-round">
+                                        <i class="mdi-content-create"></i>
+                                    </button>
+                                </a>
+                                <a href="{{ path('question_delete',{'id':question.id}) }}" class="text-danger"
+                                   title="{{ 'question.detail.buttons.delete.placeholder'| trans }}">
+                                    <button type="button" class="btn btn-flat btn-round btn-danger">
+                                        <i class="mdi-action-delete"></i>
+                                    </button>
+                                </a>
+                            {% endif %}
+                        </h2>
+
+                        <h5>{{ 'question.labels.explanation'| trans }}</h5>
+                        <pre>{{ question.question|nl2br }}</pre>
+
+
+                        {% if(question.answer is not null) %}
+                            <h5>{{ 'question.labels.answer'| trans }}</h5>
+                            <p class="answer-text">{{ question.answer|nl2br }}</p>
+                            <h5>{{ 'question.labels.devname'| trans }}</h5>
+                            <a href="">{{ question.developer }}</a>
+                        {% endif %}
+
+
+
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+
 {% endblock %}
