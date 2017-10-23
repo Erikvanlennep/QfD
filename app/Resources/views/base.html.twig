@@ -5,75 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}Questions For Developers{% endblock %}</title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link rel="stylesheet"
-          href="https://unpkg.com/bootstrap-material-design@4.0.0-beta.3/dist/css/bootstrap-material-design.min.css"
-          integrity="sha384-k5bjxeyx3S5yJJNRD1eKUMdgxuvfisWKku5dwHQq9Q/Lz6H8CyL89KF52ICpX4cL" crossorigin="anonymous">
-
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link href="{{ asset('bundles/app/css/style.css') }}" rel="stylesheet" type="text/css"/>
-
+    <script src="{{ asset('bundles/app/js/confirmDelete.js') }}"></script>
     {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-    <a class="navbar-brand" href="#">Questions For Developers</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    <button class="btn my-2 my-sm-0" type="submit">Search</button>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <h1 class="title"><a href="#" class="home-link title">Questions for Devs</a></h1>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="">{{ 'base.menu.top-answers'|trans }}</a>
+                </li>
+                <li><a href="">{{ 'base.menu.category'|trans }}</a></li>
+                <li><a href="">{{ 'base.menu.new-answers'|trans }}</a>
+                </li>
+                <li><a href="">{{ 'base.menu.girls-only'|trans }}</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="{{ 'base.search.placeholder'| trans }}">
+                    </div>
+                    {#<button type="submit" class="btn btn-default ask-btn">Submit</button>#}
+                    <a href=""><i class="mdi-action-search"></i></a>
                 </form>
-            </li>
-        </ul>
-        <button class="btn btn-default">Login</button>
+                <li><a href="{{ path('fos_user_security_login') }}"><i class="mdi-action-account-circle"></i></a></li>
+            </ul>
+        </div>
+
 
     </div>
-</div>
 </nav>
 
 {% block body %}
     <div class="container-fluid">
-        <div class="col-md-8">
-            {% block content %}{% endblock %}
-        </div>
-
-        <div class="col-md-4">
-            <div class="jumbotron square">
-                {% block formContent %}{% endblock %}
+            <div class="col-md-8">
+                {% block content %}{% endblock %}
             </div>
-        </div>
+
+            <div class="col-md-4">
+                <div class="jumbotron square">
+                    {% block sideContent %}{% endblock %}
+                </div>
+            </div>
     </div>
 {% endblock %}
 
 
 
 {#Bootstrap scripts#}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://unpkg.com/popper.js@1.12.5/dist/umd/popper.js"
-        integrity="sha384-KlVcf2tswD0JOTQnzU4uwqXcbAy57PvV48YUiLjqpk/MJ2wExQhg9tuozn5A1iVw"
-        crossorigin="anonymous"></script>
-<script src="https://unpkg.com/bootstrap-material-design@4.0.0-beta.3/dist/js/bootstrap-material-design.js"
-        integrity="sha384-hC7RwS0Uz+TOt6rNG8GX0xYCJ2EydZt1HeElNwQqW+3udRol4XwyBfISrNDgQcGA"
-        crossorigin="anonymous"></script>
-<script>$(document).ready(function () {
-        $('body').bootstrapMaterialDesign();
-    });</script>
+
 
 {% block javascripts %}{% endblock %}
 <!-- Include all compiled plugins (below), or include individual files as needed -->
