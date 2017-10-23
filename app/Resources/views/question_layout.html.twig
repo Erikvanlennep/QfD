@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% form_theme postform 'bootstrap_3_layout.html.twig' %}
+
+ {% block content %}
+     {% for question in questions %}
+         {% if questions is not null %}
+             <div class="jumbotron square">
+                 <h5>{{ 'question.labels.question'| trans }}</h5>
+
+                 <h2 class="question-header">
+                     <a href="{{ path('question_show', { 'id': question.id }) }}">
+                         {{ question.title }}
+                     </a>
+                 </h2>
+                 {% if (is_granted('ROLE_ADMIN') or (question.developer == user)) %}
+                     <a href="{{ path('question_edit', { 'id': question.id }) }}" class="edit-btns">
+                         <button type="button" class="btn btn-flat btn-round" title="{{ 'question.buttons.edit'| trans }}">
+                             <i class="mdi-content-create"></i>
+                         </button>
+                     </a>
+                     <a href="{{ path('question_delete', { 'id': question.id }) }}" class="text-danger">
+                         <button type="button" class="btn btn-flat btn-round btn-danger" title="{{ 'question.buttons.delete'| trans }}">
+                             <i class="mdi-action-delete"></i>
+                         </button>
+                     </a>
+                 {% endif %}
+
+             </div>
+         {% endif %}
+     {% else %}
+         <span>Er zijn nog geen vragen</span>
+     {% endfor %}
+ {% endblock %}
+
+
+
+    {% block sideContent %}
+        {{ form_start(postform) }}
+        {{ form_widget(postform) }}
+        {{ form_end(postform) }}
+    {% endblock %}
