@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Question</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ question.id }}</td>
+            </tr>
+            <tr>
+                <th>Question</th>
+                <td>{{ question.question }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ question.title }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{% if question.date %}{{ question.date|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Likes</th>
+                <td>{{ question.likes }}</td>
+            </tr>
+            <tr>
+                <th>Answer</th>
+                <td>{{ question.answer }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ question.city }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ question.age }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ question.email }}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{% if question.deleted %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('question_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('question_edit', { 'id': question.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
