@@ -28,7 +28,7 @@ class QuestionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $questions = $em->getRepository('AppBundle:Question')->findAllTest();
+        $questions = $em->getRepository('AppBundle:Question')->findAll();
 
         $user = $this->getUser();
 
@@ -39,7 +39,7 @@ class QuestionController extends Controller
 
         if ($form->isValid()) {
 
-            $entity->setDatum(new \DateTime());
+            $entity->setDate(new \DateTime());
             $entity->setDeleted(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
