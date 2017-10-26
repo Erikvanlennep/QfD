@@ -26,7 +26,7 @@ class QuestionRepository extends EntityRepository
     {
         $paramQuery = 'q.' . $param . '';
         return $this->createQueryBuilder('q')
-            ->where('q.antwoord IS NOT NULL AND q.deleted = false')
+            ->where('q.answer IS NOT NULL AND q.deleted = false')
             ->orderBy($paramQuery, 'DESC')
             ->getQuery()
             ->execute();

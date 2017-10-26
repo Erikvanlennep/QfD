@@ -13,7 +13,7 @@
                          {{ question.title }}
                      </a>
                  </h2>
-                 {% if (is_granted('ROLE_ADMIN') or (question.developer == user)) %}
+                 {% if is_granted('ROLE_USER') and ((is_granted('ROLE_ADMIN') or (question.developer == user))) %}
                      <a href="{{ path('question_edit', { 'question': question.id }) }}" class="edit-btns">
                          <button type="button" class="btn btn-flat btn-round" title="{{ 'question.buttons.edit'| trans }}">
                              <i class="mdi-content-create"></i>

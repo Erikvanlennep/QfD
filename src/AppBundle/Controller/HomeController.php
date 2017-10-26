@@ -50,10 +50,11 @@ class HomeController extends Controller
     }
 
     /**
-     * Lists all question entities.
+     * List of all unanswered questions
      *
      * @Route("/unanswered", name="question_unanswered")
      * @Template()
+     *
      */
     public function unansweredAction(Request $request)
     {
@@ -73,7 +74,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Lists all question entities.
+     * Lists of all questions in a category.
      *
      * @Route("/categories", name="question_categories")
      * @Template()
@@ -129,7 +130,28 @@ class HomeController extends Controller
         ));
     }
 
+    /**
+     * List of all the newest answered questions
+     *
+     * @Route("/newest", name="question_newest")
+     * @Template()
+     */
+    public function newestAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $user = $this->getUser();
+
+        $questions = $em->getRepository('AppBundle:Question')->findByFilter("date");
+
+        $form = $this->filterForms($request);
+
+        return $this->render('question/index.html.twig', array(
+            'questions' => $questions,
+            'postform' => $form->createView(),
+            'user' => $user,
+        ));
+    }
 
     /**
      * Creates a form to create a Question entity.

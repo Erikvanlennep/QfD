@@ -51,7 +51,7 @@ class QuestionController extends Controller
     /**
      * Displays a form to edit an existing question entity.
      *
-     * @Route("edit/{question}", name="question_edit")
+     * @Route("/edit/{question}", name="question_edit")
      * @ParamConverter("question", class="AppBundle:Question")
      * @Method({"GET", "POST"})
      * @Security("is_granted('ROLE_USER')")
