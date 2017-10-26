@@ -125,6 +125,7 @@ base:
         new-answers: Nieuwste antwoorden
         girls-only: Girls-only
         profile: Profiel
+        unanswered: onbeantwoord
     search:
         placeholder: Zoeken
 

@@ -9,17 +9,17 @@
                  <h5>{{ 'question.labels.question'| trans }}</h5>
 
                  <h2 class="question-header">
-                     <a href="{{ path('question_show', { 'id': question.id }) }}">
+                     <a href="{{ path('question_detail', { 'question': question.id }) }}">
                          {{ question.title }}
                      </a>
                  </h2>
                  {% if (is_granted('ROLE_ADMIN') or (question.developer == user)) %}
-                     <a href="{{ path('question_edit', { 'id': question.id }) }}" class="edit-btns">
+                     <a href="{{ path('question_edit', { 'question': question.id }) }}" class="edit-btns">
                          <button type="button" class="btn btn-flat btn-round" title="{{ 'question.buttons.edit'| trans }}">
                              <i class="mdi-content-create"></i>
                          </button>
                      </a>
-                     <a href="{{ path('question_delete', { 'id': question.id }) }}" class="text-danger">
+                     <a href="{{ path('question_delete', { 'question': question.id }) }}" class="text-danger">
                          <button type="button" class="btn btn-flat btn-round btn-danger" title="{{ 'question.buttons.delete'| trans }}">
                              <i class="mdi-action-delete"></i>
                          </button>

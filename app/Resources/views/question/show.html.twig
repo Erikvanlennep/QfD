@@ -11,7 +11,7 @@
                 <ul>
                         <a href="{{ previous }}"><i class="mdi-navigation-arrow-back"></i></a>
                         {% if (question.answer is null) and ((is_granted('ROLE_USER')) or (is_granted("ROLE_ADMIN"))) %}
-                            <a href="{{ path('question_edit',{'id':question.id}) }}" class="text-right">
+                            <a href="{{ path('question_edit',{'question':question.id}) }}" class="text-right">
                                 <button type="button"
                                         class="btn btn-default btn-right">{{ 'question.detail.claim'|trans }}</button>
                             </a>
@@ -20,13 +20,13 @@
                         <h2 class="big-fat-question">{{ question.title }}
 
                             {% if (question.answer is not null) and (question.developer == user) or (is_granted('ROLE_ADMIN')) %}
-                                <a href="{{ path('question_edit',{'id':question.id}) }}"
+                                <a href="{{ path('question_edit',{'question':question.id}) }}"
                                    title="{{ 'question.detail.buttons.edit.placeholder'| trans }}">
                                     <button type="button" class="btn btn-flat btn-round">
                                         <i class="mdi-content-create"></i>
                                     </button>
                                 </a>
-                                <a href="{{ path('question_delete',{'id':question.id}) }}" class="text-danger"
+                                <a href="{{ path('question_delete',{'question':question.id}) }}" class="text-danger"
                                    title="{{ 'question.detail.buttons.delete.placeholder'| trans }}">
                                     <button type="button" class="btn btn-flat btn-round btn-danger">
                                         <i class="mdi-action-delete"></i>

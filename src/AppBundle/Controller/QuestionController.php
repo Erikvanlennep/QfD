@@ -13,84 +13,23 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\QuestionService;
 use Symfony\Component\Security\Acl\Exception\Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Question controller.
  *
- * @Route("/")
+ * @Route("/question")
  */
 class QuestionController extends Controller
 {
     /**
-     * Lists all question entities.
-     *
-     * @Route("/", name="question_index")
-     * @Template()
-     */
-    public function indexAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $questions = $em->getRepository('AppBundle:Question')->findAll();
-
-        $user = $this->getUser();
-
-        $entity = new Question();
-        $form = $this->createCreateForm($entity);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-
-            $entity->setDate(new \DateTime());
-            $entity->setDeleted(false);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-            return $this->redirectToRoute('question_index');
-        }
-
-
-        return $this->render('question/index.html.twig', array(
-            'questions' => $questions,
-            'postform' => $form->createView(),
-            'user' => $user,
-        ));
-    }
-
-    /**
-     * Creates a new question entity.
-     *
-     * @Route("/new", name="question_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        $question = new Question();
-        $form = $this->createForm('AppBundle\Form\QuestionType', $question);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($question);
-            $em->flush();
-
-            return $this->redirectToRoute('question_show', array('id' => $question->getId()));
-        }
-
-        return $this->render('question/new.html.twig', array(
-            'question' => $question,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
      * Finds and displays a question entity.
      *
-     * @Route("/{id}", name="question_show")
-     * @Method("GET")
+     * @Route("/detail/{question}", name="question_detail")
+     * @ParamConverter("question", class="AppBundle:Question")
      */
-    public function showAction(Request $request, Question $question)
+    public function detailAction(Request $request, Question $question)
     {
 
         $user = $this->getUser();
@@ -121,8 +60,10 @@ class QuestionController extends Controller
     /**
      * Displays a form to edit an existing question entity.
      *
-     * @Route("/{id}/edit", name="question_edit")
+     * @Route("edit/{question}", name="question_edit")
+     * @ParamConverter("question", class="AppBundle:Question")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('ROLE_USER')")
      */
     public function editAction(Request $request, Question $question)
     {
@@ -163,64 +104,32 @@ class QuestionController extends Controller
     /**
      * Deletes a question entity.
      *
-     * @Route("/{id}", name="question_delete")
-     * @Method("DELETE")
+     * @Route("delete/{question}", name="question_delete")
+     * @ParamConverter("question", class="AppBundle:Question")
      */
     public function deleteAction(Request $request, Question $question)
     {
-        $form = $this->createDeleteForm($question);
-        $form->handleRequest($request);
+        $user = $this->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($question);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+
+        $questions = $em->getRepository('AppBundle:Question')->findBy(array("id" => $question));
+
+        if($question->getDeveloper()->getId()){
+
         }
 
+        if (($question->getDeveloper()->getId() == $user->getId())) {
+
+            if ($questions === null) {
+                return $this->redirectToRoute('question_index');
+            } else {
+                $questions[0]->setDeleted(true);
+                $em->persist($questions[0]);
+                $em->flush();
+                return $this->redirectToRoute('question_index');
+            }
+        }
         return $this->redirectToRoute('question_index');
-    }
-
-    /**
-     * Creates a form to create a Question entity.
-     *
-     * @param Question $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Question $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\QuestionType', $entity, array(
-            'action' => $this->generateUrl('question_index'),
-            'method' => 'POST',
-        ));
-
-        $form->remove("category");
-
-        $translated = $this->get('translator')->trans('question.general.create');
-
-        $form->add($translated, SubmitType::class, array(
-                'attr' => array(
-                    'class' => 'submit-form-button'
-                ),
-                'label' => 'question.general.create'
-            )
-        );
-
-        return $form;
-    }
-
-    /**
-     * Creates a form to delete a question entity.
-     *
-     * @param Question $question The question entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Question $question)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('question_delete', array('id' => $question->getId())))
-            ->setMethod('DELETE')
-            ->getForm();
     }
 }

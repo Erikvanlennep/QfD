@@ -6,10 +6,28 @@ use Doctrine\ORM\EntityRepository;
 
 class QuestionRepository extends EntityRepository
 {
-    public function findAllTest()
+    public function findAll()
     {
         return $this->createQueryBuilder('q')
             ->where('q.answer IS NOT NULL AND q.deleted = false')
+            ->getQuery()
+            ->execute();
+    }
+
+    public function findAllWithoutAnswer()
+    {
+        return $this->createQueryBuilder('q')
+            ->where('q.deleted = false')
+            ->getQuery()
+            ->execute();
+    }
+
+    public function findByFilter($param)
+    {
+        $paramQuery = 'q.' . $param . '';
+        return $this->createQueryBuilder('q')
+            ->where('q.antwoord IS NOT NULL AND q.deleted = false')
+            ->orderBy($paramQuery, 'DESC')
             ->getQuery()
             ->execute();
     }
