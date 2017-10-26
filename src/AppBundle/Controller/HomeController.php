@@ -2,12 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Question;
 use AppBundle\Form\EditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,6 +71,65 @@ class HomeController extends Controller
             'user' => $user,
         ));
     }
+
+    /**
+     * Lists all question entities.
+     *
+     * @Route("/categories", name="question_categories")
+     * @Template()
+     */
+    public function categoryAction(Request $request)
+    {
+        $questions = null;
+
+        $user = $this->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $categories = $em->getRepository('AppBundle:Category')->findAll();
+
+        $label = $this->get('translator')->trans('question.general.filter');
+
+        foreach ($categories as $category) {
+            $name_set[$category->getCategory()] = $category->getId();
+        }
+
+        $form = $this->createFormBuilder(null)
+            ->add('category', ChoiceType::class, array(
+                'label' => 'question.category.label',
+                'choices'  => $name_set,
+            ))
+            ->add($label, SubmitType::class, array(
+                'label' => 'question.general.filter'
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $repository = $em->getRepository('AppBundle:Question');
+            $category = $form['category']->getData();
+            $query = $repository->createQueryBuilder('q')
+                ->where('q.category = ' . $category . ' AND q.answer IS NOT NULL')
+                ->getQuery();
+            $questions = $query->getResult();
+        } else if(!empty($categories)) {
+            $repository = $em->getRepository('AppBundle:Question');
+            $category = reset($name_set);
+            $query = $repository->createQueryBuilder('q')
+                ->where('q.category = ' . $category . ' AND q.answer IS NOT NULL')
+                ->getQuery();
+            $questions = $query->getResult();
+        }
+
+        return $this->render('question/index.html.twig', array(
+            'postform' => $form->createView(),
+            'questions' => $questions,
+            'user' => $user,
+        ));
+    }
+
+
 
     /**
      * Creates a form to create a Question entity.

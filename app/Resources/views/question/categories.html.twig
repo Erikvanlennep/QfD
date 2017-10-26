@@ -1,0 +1,54 @@
+{% extends 'question_layout.html.twig' %}
+
+{% block title %}Categories{% endblock %}
+
+{% form_theme postform 'bootstrap_3_layout.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="jumbotron">
+                {% block formContent %}
+                    {{ form_start(postform) }}
+                    {{ form_widget(postform) }}
+                    {{ form_end(postform) }}
+                {% endblock %}
+
+                {% block content %}
+                    <ul>
+                        {% for item in questions %}
+                            {% if questions is not null %}
+                                <li>
+                                    <h2 class="question-header">
+                                        <a href="{{ path('app_question_detail',{'question':item.id}) }}">
+                                            {{item.title}}
+                                        </a>
+                                    </h2>
+                                    {% if (is_granted('ROLE_ADMIN') or (item.developer == user)) %}
+                                        <a href="{{ path('app_question_edit',{'question':item.id}) }}" class="edit-btns">
+                                            <button type="button" class="btn btn-flat btn-round">
+                                                <i class="mdi-content-create"></i>
+                                            </button>
+                                        </a>
+                                        <a href="{{ path('question_delete', { 'id': item.id }) }}" class="text-danger">
+                                            <button type="button" class="btn btn-flat btn-round btn-danger">
+                                                <i class="mdi-action-delete"></i>
+                                            </button>
+                                        </a>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li>
+                                {{ 'category.message.noquestion'| trans }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
