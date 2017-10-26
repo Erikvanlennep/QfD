@@ -14,10 +14,10 @@ class QuestionRepository extends EntityRepository
             ->execute();
     }
 
-    public function findAllWithoutAnswer()
+    public function findAllUnanswered()
     {
         return $this->createQueryBuilder('q')
-            ->where('q.deleted = false')
+            ->where('q.answer IS NULL AND q.deleted = false')
             ->getQuery()
             ->execute();
     }

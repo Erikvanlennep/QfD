@@ -37,9 +37,7 @@ class HomeController extends Controller
 
         $user = $this->getUser();
 
-        $forms = $this->filterForms($request);
-
-        $form = $forms['form'];
+        $form = $this->filterForms($request);
 
         return $this->render('question/index.html.twig', array(
             'questions' => $questions,
@@ -56,16 +54,19 @@ class HomeController extends Controller
      */
     public function unansweredAction(Request $request)
     {
-        $questions = $this->get("app.entity.question")->findUnanswered();
+        $em = $this->getDoctrine()->getManager();
 
-        $forms = $this->filterForms($request);
+        $user = $this->getUser();
 
-        $form = $forms['form'];
+        $questions = $em->getRepository('AppBundle:Question')->findAllUnanswered();
 
-        return array(
+        $form = $this->filterForms($request);
+
+        return $this->render('question/index.html.twig', array(
             'questions' => $questions,
             'postform' => $form->createView(),
-        );
+            'user' => $user,
+        ));
     }
 
     /**
@@ -108,15 +109,16 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if ($form->isValid()) {
-            $question->setDatum(new \DateTime());
-            $question->setDeleted(true);
+            $question->setDate(new \DateTime());
+            $question->setDeleted(false);
             $em->persist($question);
             $em->flush();
 
-            return $this->redirectToRoute('app_question_index');
+            //create empty form after submit
+            $question = new Question();
+            $form = $this->createCreateForm($question);
         }
 
-        return array(
-            'form' => $form);
+        return $form;
     }
 }

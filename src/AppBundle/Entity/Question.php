@@ -78,6 +78,7 @@ class Question
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Developer")
+     * @ORM\JoinColumn(name="developer_id", referencedColumnName="id")
      *
      */
     private $developer;

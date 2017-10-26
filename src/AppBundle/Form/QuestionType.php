@@ -30,7 +30,7 @@ class QuestionType extends AbstractType
             ))
             ->add('question', TextareaType::class, array('attr' => array(
                 'cols' => '5',
-                'rows' => '8',
+                'rows' => '5',
                 'placeholder' => 'question.form.explanation.placeholder'
             ),
                 'label' => 'question.form.question.label'

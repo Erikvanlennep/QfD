@@ -37,24 +37,15 @@ class QuestionController extends Controller
         try {
             $previousUrl = $this->redirect($request->headers->get('referer'));
             $previousUrl = $previousUrl->getTargetUrl();
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             $previousUrl = $this->redirectToRoute('question_index');
         }
 
-
-
-
-        $hasAnswer = $question->getAnswer();
-
-        if ($user == null and $hasAnswer == null) {
-            return $this->redirectToRoute('question_index');
-        } else {
-            return $this->render('question/show.html.twig', array(
-                'question' => $question,
-                'user' => $user,
-                'previous' => $previousUrl,
-            ));
-        }
+        return $this->render('question/show.html.twig', array(
+            'question' => $question,
+            'user' => $user,
+            'previous' => $previousUrl,
+        ));
     }
 
     /**
@@ -104,32 +95,49 @@ class QuestionController extends Controller
     /**
      * Deletes a question entity.
      *
-     * @Route("delete/{question}", name="question_delete")
+     * @Route("/delete/{question}", name="question_delete")
      * @ParamConverter("question", class="AppBundle:Question")
      */
     public function deleteAction(Request $request, Question $question)
     {
+        $previousUrl = $this->createRedirectUrl($request, 'question_index');
+
         $user = $this->getUser();
 
+        if($question->getDeveloper() != null &&
+            $question->getDeveloper()->getId() == $user->getId()){
+            return $this->createDeleteForm($question, $previousUrl);
+        }
+
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+            return $this->createDeleteForm($question, $previousUrl);
+        }
+
+        return $this->redirect($previousUrl);
+    }
+
+    private function createDeleteForm(Question $question, $previousUrl)
+    {
         $em = $this->getDoctrine()->getManager();
 
-        $questions = $em->getRepository('AppBundle:Question')->findBy(array("id" => $question));
+        if ($question === null) {
+            return $this->redirect($previousUrl);
+        } else {
+            $question->setDeleted(true);
+            $em->persist($question);
+            $em->flush();
+            return $this->redirect($previousUrl);
+        }
+    }
 
-        if($question->getDeveloper()->getId()){
-
+    private function createRedirectUrl(Request $request, $currentRoute){
+        try {
+            $previousUrl = $this->redirect($request->headers->get('referer'));
+            $previousUrl = $previousUrl->getTargetUrl();
+        } catch (Exception $exception) {
+            $previousUrl = $this->redirectToRoute($currentRoute);
         }
 
-        if (($question->getDeveloper()->getId() == $user->getId())) {
-
-            if ($questions === null) {
-                return $this->redirectToRoute('question_index');
-            } else {
-                $questions[0]->setDeleted(true);
-                $em->persist($questions[0]);
-                $em->flush();
-                return $this->redirectToRoute('question_index');
-            }
-        }
-        return $this->redirectToRoute('question_index');
+        return $previousUrl;
     }
 }
