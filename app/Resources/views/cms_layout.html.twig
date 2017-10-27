@@ -18,7 +18,7 @@
         </li>
         {% if is_granted('ROLE_ADMIN') %}
             <li class="form-group">
-                <a href="#">
+                <a href="{{ path('developer_overview') }}">
                     <button type="button" class="btn btn-default btn-lg btn-block">{{ 'profile.menu.newDev' | trans }}
                     </button>
                 </a>

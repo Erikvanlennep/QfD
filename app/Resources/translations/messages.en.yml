@@ -109,6 +109,9 @@ profile:
         name: Name
         infix: infix
         surname: Surname
+        username: Username
+        first_name: First name
+        last_name: Last name
 
 #base.html.twig file
 base:

@@ -21,16 +21,16 @@ class DeveloperType extends AbstractType
         $builder
             ->add('firstname', TextType::class, array(
                 'label' => 'profile.form.name',
-                'attr' => array('style' => 'width:200px', 'placeholder' => 'voornaam')
+                'attr' => array('style' => 'width:200px', 'placeholder' => 'profile.form.first_name')
             ))
             ->add('infix', TextType::class, array(
                 'label' => 'profile.form.infix',
                 'required' => false,
-                'attr' => array('style' => 'width:120px', 'placeholder' => 'tussenvoegsel')
+                'attr' => array('style' => 'width:120px', 'placeholder' => 'profile.form.infix')
             ))
             ->add('lastname', TextType::class, array(
                 'label' => 'profile.form.surname',
-                'attr' => array('style' => 'width:200px', 'placeholder' => 'achternaam')
+                'attr' => array('style' => 'width:200px', 'placeholder' => 'profile.form.last_name')
             ))
             ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle', 'attr' => array('style' => 'width:300px', 'placeholder' => 'e.g.@example.com')))
             ->add('plainPassword', RepeatedType::class, array(
