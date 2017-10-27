@@ -115,6 +115,7 @@ base:
         new-answers: Newest answers
         girls-only: Girls-only
         profile: Profile
+        unanswered: unanswered
     search:
         placeholder: Search
 
