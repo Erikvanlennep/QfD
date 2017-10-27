@@ -15,19 +15,30 @@
         </thead>
         <tbody>
         {% if developers is null %}
-            <tr><td>{{ 'profile.index.noquestion'|trans }}</td></tr>
+            <tr>
+                <td>{{ 'profile.index.noquestion'|trans }}</td>
+            </tr>
         {% endif %}
         {% for developer in developers %}
+            {% set admin = false %}
             <tr>
                 <td>{{ developer.firstname }} {{ developer.infix }} {{ developer.lastname }} </td>
-                    <td class="text-right">
-                        <a href="{{ path('developer_delete',{'id':developer.id}) }}" class="text-danger"
-                           title="{{ 'profile.index.delete' |trans }}">
-                            <button type="button" class="btn btn-flat btn-round btn-danger">
-                                <i class="mdi-action-delete"></i>
-                            </button>
-                        </a>
-                    </td>
+                <td>
+                    {% for role in developer.roles %}
+                        {% if 'ROLE_ADMIN' in role %}
+                            {% set admin = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <input id="switchForAdmin" type="checkbox" {% if admin %}checked {% endif %}>
+                </td>
+                <td class="text-right">
+                    <a href="{{ path('developer_delete',{'id':developer.id}) }}" class="text-danger"
+                       title="{{ 'profile.index.delete' |trans }}">
+                        <button type="button" class="btn btn-flat btn-round btn-danger">
+                            <i class="mdi-action-delete"></i>
+                        </button>
+                    </a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

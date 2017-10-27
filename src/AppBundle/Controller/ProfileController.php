@@ -125,4 +125,16 @@ class ProfileController extends BaseController
 
         return $this->redirectToRoute('developer_overview');
     }
+
+    /**
+     * Updating a developers role
+     *
+     * @Route("/developer/update/{id}", name="developer_update")
+     * @Security("has_role('ROLE_ADMIN')")
+     *
+     */
+    public function developerUpdateAction(Request $request, Developer $developer)
+    {
+
+    }
 }
