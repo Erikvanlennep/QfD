@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Developer;
 use AppBundle\Form\InvitationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -77,5 +78,51 @@ class ProfileController extends BaseController
         ));
     }
 
+    /**
+     * Overview of all the developers
+     *
+     * @Route("/developer", name="developer_overview")
+     * @Template()
+     * @Security("has_role('ROLE_ADMIN')")
+     *
+     */
+    public function developerOverviewAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $developers = $em->getRepository('AppBundle:Developer')->findAll();
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $developers,
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+        return $this->render('developer/overview.html.twig', array(
+            'developers' => $pagination,
+        ));
+    }
+
+    /**
+     * Delete a developer
+     *
+     * @Route("/developer/delete/{id}", name="developer_delete")
+     * @Security("has_role('ROLE_ADMIN')")
+     *
+     */
+    public function developerDeleteAction(Request $request, Developer $developer)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AppBundle:Developer')->find($developer);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Category entity.');
+        }
+
+        $em->remove($entity);
+        $em->flush();
+
+        return $this->redirectToRoute('developer_overview');
+    }
 }

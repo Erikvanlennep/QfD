@@ -1,0 +1,39 @@
+{% extends 'cms_layout.html.twig' %}
+
+{% block title %}Profile Developers Overview{% endblock %}
+
+{% block profileContent %}
+    <a href="{{ path('fos_user_registration_register') }}">
+        <button type="button" class="btn btn-default btn-lg btn-right">{{ 'profile.developer.add' | trans }}</button>
+    </a>
+
+    <table class="records_list table table-condensed">
+        <thead>
+        <tr>
+            <th class="col-xs-12 col-md-12">{{ 'profile.menu.newDev'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if developers is null %}
+            <tr><td>{{ 'profile.index.noquestion'|trans }}</td></tr>
+        {% endif %}
+        {% for developer in developers %}
+            <tr>
+                <td>{{ developer.firstname }} {{ developer.infix }} {{ developer.lastname }} </td>
+                    <td class="text-right">
+                        <a href="{{ path('developer_delete',{'id':developer.id}) }}" class="text-danger"
+                           title="{{ 'profile.index.delete' |trans }}">
+                            <button type="button" class="btn btn-flat btn-round btn-danger">
+                                <i class="mdi-action-delete"></i>
+                            </button>
+                        </a>
+                    </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(developers) }}
+    </div>
+{% endblock %}

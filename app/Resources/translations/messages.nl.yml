@@ -97,9 +97,12 @@ profile:
         view: Bekijk
         delete: Verwijder
         noquestion: Er zijn geen onbeantwoorde vragen
+        nodev: Er zijn geen developers aangemeld
     invite:
         send-invite: Verzend uitnodiging
         notification: Email is verzonden!
+    developer:
+        add: Voeg developer toe
     answered:
         view: Bekijk
         edit: Bewerk

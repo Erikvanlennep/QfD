@@ -94,9 +94,12 @@ profile:
         view: View
         delete: Delete
         noquestion: There are no unanswered questions
+        nodev: There are no developers registered
     invite:
         send-invite: Send invitation
         notification: Email has been sent!
+    developer:
+        add: Voeg developer toe
     answered:
         view: View
         edit: Edit
