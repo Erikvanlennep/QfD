@@ -36,9 +36,16 @@ class ProfileController extends BaseController
 //            throw new AccessDeniedException('This user does not have access to this section.');
 //        }
 
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $questions,
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
         return $this->render('profile/index.html.twig', array(
             'user' => $user,
-            'questions' => $questions,
+            'questions' => $pagination,
         ));
 
 
@@ -72,15 +79,16 @@ class ProfileController extends BaseController
             $questions = $em->getRepository('AppBundle:Question')->findAllAnswered();
         }
 
-//        $paginator = $this->get('knp_paginator');
-//        $pagination = $paginator->paginate(
-//            $questions,
-//            $request->query->getInt('page', 1)/*page number*/,
-//            5/*limit per page*/
-//        );
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $questions,
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('profile/answered.html.twig', array(
-            'questions' => $questions,
+            'questions' => $pagination,
         ));
     }
 }
