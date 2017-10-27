@@ -79,6 +79,9 @@ fos_user:
     registration:
                 form:
                     type: AppBundle\Form\DeveloperType
+    profile:
+                form:
+                    type: AppBundle\Form\ProfileFormType
     use_username_form_type: false
 
 #Kpn_paginator configurations
