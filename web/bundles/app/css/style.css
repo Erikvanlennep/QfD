@@ -1,0 +1,147 @@
+body{
+    background-image: url("../images/askadev_wall.png");
+    color: #666;
+    /*background-color: #DEE1DD;*/
+    /*font-family: 'Raleway', sans-serif;*/
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    color: #212121;
+    font-weight: 400;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #727272;
+}
+
+.navbar.navbar, .navbar-default{
+    /*background: #0084FF!important;*/
+}
+
+
+.navbar-default .navbar-nav > li > a:hover {
+    background-color: transparent !important;
+}
+
+.home-link {
+    color: #212121;
+}
+
+.btn {
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12)
+}
+
+.submit-form-button {
+    background-color: #3F51B5;
+}
+
+label {
+    color: #212121;
+}
+
+.home-link:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+.btn-right {
+    float: right;
+}
+
+.profile-right {
+    float: right;
+    padding-right: 30px;
+    margin-left: 30px;
+}
+
+.btn {
+    margin: 0 !important;
+}
+
+.btn:hover{
+    background-color: #F5F5F5!important;
+}
+
+.btn-lower{
+    margin-top: 2em!important;
+}
+
+ul{
+    padding: 0 !important;
+}
+
+/*.navbar.navbar, .navbar-default.navbar {*/
+    /*/!*background: #3F51B5;*!/*/
+    /**/
+/*}*/
+
+.navbar-default .navbar-nav > li > a {
+    color: #ffffff;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    background-color: #98AEAD;
+
+}
+
+.ask-btn {
+    background-color: #FF5722 !important;
+    color: #fff !important;
+}
+
+.title {
+    color: #fff;
+    text-align: center;
+}
+
+.title:hover{
+    color: #fff;
+}
+
+.title:active{
+    color: #fff!important;
+}
+
+.title:focus{
+    color: #fff !important;
+    text-decoration: none;
+}
+
+a:focus{
+    color: #000;
+    text-decoration: none;
+}
+
+.white {
+    background-color: #fff;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+.square {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+.answer-text {
+    font-weight: 300 !important;
+}
+
+.mdi-action-search{
+    color: white;
+}
+
+.mdi-action-search.black{
+    color: #000;
+}
+
+.big-fat-question{
+    font-weight: bold;
+}
