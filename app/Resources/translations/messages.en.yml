@@ -83,7 +83,7 @@ category:
 profile:
     menu:
         unanswered: Unanswered questions
-        newDev: Add new developer
+        newDev: Developer overview
         categories: Category overview
         answered: My answered questions
         profile:

@@ -32,9 +32,6 @@ class ProfileController extends BaseController
         $questions = $em->getRepository('AppBundle:Question')->findAllUnanswered();
 
         $user = $this->getUser();
-//        if (!is_object($user) || !$user instanceof UserInterface) {
-//            throw new AccessDeniedException('This user does not have access to this section.');
-//        }
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -47,17 +44,6 @@ class ProfileController extends BaseController
             'user' => $user,
             'questions' => $pagination,
         ));
-
-
-
-
-//        if(!$questions) { $questions = "test";}
-//        $paginator = $this->get('knp_paginator');
-//        $pagination = $paginator->paginate(
-//            $questions,
-//            $request->query->getInt('page', 1)/*page number*/,
-//            5/*limit per page*/
-//        );
     }
 
     /**
@@ -78,7 +64,6 @@ class ProfileController extends BaseController
 
             $questions = $em->getRepository('AppBundle:Question')->findAllAnswered();
         }
-
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
