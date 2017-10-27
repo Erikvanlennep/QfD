@@ -84,6 +84,7 @@ profile:
     menu:
         unanswered: Unanswered questions
         newDev: Developer overview
+        administrator: Administrator
         categories: Category overview
         answered: My answered questions
         profile:

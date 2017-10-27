@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use FOS\UserBundle\Controller\ProfileController as BaseController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Invitation;
@@ -130,11 +131,31 @@ class ProfileController extends BaseController
      * Updating a developers role
      *
      * @Route("/developer/update/{id}", name="developer_update")
-     * @Security("has_role('ROLE_ADMIN')")
      *
      */
     public function developerUpdateAction(Request $request, Developer $developer)
     {
+        $em = $this->getDoctrine()->getManager();
 
+        $hasAdminRole = false;
+
+        foreach ($developer->getRoles() as $role) {
+            if($role == 'ROLE_ADMIN') {
+                $hasAdminRole = true;
+            }
+        }
+
+        if($hasAdminRole){
+            $developer->removeRole('ROLE_ADMIN');
+            $hasAdminRole = "ROLE_USER";
+        }else{
+            $developer->addRole('ROLE_ADMIN');
+            $hasAdminRole = "ROLE_ADMIN";
+        }
+
+        $em->persist($developer);
+        $em->flush();
+
+        return new Response($hasAdminRole, 200);
     }
 }

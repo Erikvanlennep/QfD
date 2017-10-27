@@ -1,19 +1,19 @@
 window.onload = function () {
-    $('#switchForAdmin').on('click', function (e) {
-        e.preventDefault();
+    $('.switchForAdmin').on('click', function (e) {
+        // e.preventDefault();
 
         console.log("Update user Role");
 
-        $.ajax({
-            type: "POST",
-            // Routing.generate = install fosjsroutingbundle
-            url: Routing.generate('the_route_of_your_contoller'),
-            data: DATA,
-            cache: false,
-            success: function(data){
-                alert("database has been updated");
+        var URL = $(this).attr('href');
+        var $developerId = $(this).attr("#data-id");
 
-            }
+        $.post(URL, {
+            // Your post data here, if any
+        }).done(function(response){
+
+            alert("Updated userprofile: " + response);
+        }).error(function(){
+            alert("Couldn't update the userprofile. Something went wrong");
         });
     });
 

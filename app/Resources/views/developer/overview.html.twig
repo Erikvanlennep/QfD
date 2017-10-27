@@ -11,6 +11,7 @@
         <thead>
         <tr>
             <th class="col-xs-12 col-md-12">{{ 'profile.menu.newDev'|trans }}</th>
+            <th class="col-xs-2 col-md-2">{{ 'profile.menu.administrator'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -29,7 +30,8 @@
                             {% set admin = true %}
                         {% endif %}
                     {% endfor %}
-                    <input id="switchForAdmin" type="checkbox" {% if admin %}checked {% endif %}>
+                    <input data-attr="{{ developer.id }}" class="switchForAdmin" type="checkbox" {% if admin %}checked {% endif %} href="{{ path('developer_update', {'id': developer.id} ) }}">
+                    {#<a class="switchForAdmin" href="{{ path('developer_update', {'id': developer.id} ) }}" >test</a>#}
                 </td>
                 <td class="text-right">
                     <a href="{{ path('developer_delete',{'id':developer.id}) }}" class="text-danger"

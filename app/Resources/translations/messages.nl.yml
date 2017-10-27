@@ -87,6 +87,7 @@ profile:
     menu:
         unanswered: Onbeantwoorde vragen
         newDev: Developer overzicht
+        administrator: Administrator
         categories: Categorie overzicht
         answered: Mijn beantwoorde vragen
         profile:
