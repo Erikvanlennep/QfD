@@ -1,6 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<form action="{{ path('category_index') }}" method="POST" class="fos_user_registration_register">
+<form action="{{ path('fos_user_registration_register') }}" method="POST" class="fos_user_registration_register">
     <div class="form-group" id="fos_user_registration_form">
     {{ form_row(form.firstname) }}
     {{ form_row(form.infix) }}

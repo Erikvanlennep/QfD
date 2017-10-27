@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * Category controller.
  *
- * @Route("category")
+ * @Route("profile/category")
  * @Security("has_role('ROLE_USER')")
  */
 class CategoryController extends Controller

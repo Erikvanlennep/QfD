@@ -31,4 +31,13 @@ class QuestionRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function findAllAnswered()
+    {
+        return $this->createQueryBuilder('q')
+            ->where('q.answer IS NOT NULL AND q.deleted = false')
+            ->orderBy('q.date', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
 }
