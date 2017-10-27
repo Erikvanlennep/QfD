@@ -21,7 +21,7 @@ use VMelnik\DoctrineEncryptBundle\Configuration\Encrypted;
 class ProfileController extends BaseController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="profile_index")
      * @Template()
      *
      */
@@ -51,5 +51,36 @@ class ProfileController extends BaseController
 //            $request->query->getInt('page', 1)/*page number*/,
 //            5/*limit per page*/
 //        );
+    }
+
+    /**
+     * @Route("/answered", name="profile_answered")
+     * @Template()
+     *
+     */
+    public function answeredAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $questions = $em->getRepository('AppBundle:Question')->findBy(array('developer' => $user));
+
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+
+            $questions = $em->getRepository('AppBundle:Question')->findAllAnswered();
+        }
+
+//        $paginator = $this->get('knp_paginator');
+//        $pagination = $paginator->paginate(
+//            $questions,
+//            $request->query->getInt('page', 1)/*page number*/,
+//            5/*limit per page*/
+//        );
+
+        return $this->render('profile/answered.html.twig', array(
+            'questions' => $questions,
+        ));
     }
 }
