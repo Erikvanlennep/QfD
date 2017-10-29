@@ -40,4 +40,12 @@ class QuestionRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function findAllByCategory($category){
+        return $this->createQueryBuilder('q')
+            ->where('q.category = ' . $category . ' AND q.answer IS NOT NULL AND q.deleted = false')
+            ->orderBy('q.date', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
 }
