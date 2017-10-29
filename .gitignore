@@ -89,7 +89,7 @@ fabric.properties
 **/Entity/*~
 
 ### Symfony Patch ###
-/web/css/
-/web/js/
+web/css/
+web/js/
 
 # End of https://www.gitignore.io/api/symfony,composer,intellij

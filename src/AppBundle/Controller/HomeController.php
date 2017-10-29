@@ -36,7 +36,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $questions = $em->getRepository('AppBundle:Question')->findAll();
+        $questions = $em->getRepository('AppBundle:Question')->findAllAnswered();
 
         $user = $this->getUser();
 
@@ -108,19 +108,16 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $repository = $em->getRepository('AppBundle:Question');
             $category = $form['category']->getData();
-            $query = $repository->createQueryBuilder('q')
-                ->where('q.category = ' . $category . ' AND q.answer IS NOT NULL')
-                ->getQuery();
-            $questions = $query->getResult();
+
+            $questions = $em->getRepository('AppBundle:Question')->findAllByCategory($category);
+
+
         } else if(!empty($categories)) {
-            $repository = $em->getRepository('AppBundle:Question');
+
             $category = reset($name_set);
-            $query = $repository->createQueryBuilder('q')
-                ->where('q.category = ' . $category . ' AND q.answer IS NOT NULL')
-                ->getQuery();
-            $questions = $query->getResult();
+
+            $questions = $em->getRepository('AppBundle:Question')->findAllByCategory($category);
         }
 
         return $this->render('question/index.html.twig', array(

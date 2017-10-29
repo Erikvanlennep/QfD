@@ -87,6 +87,7 @@ profile:
     menu:
         unanswered: Onbeantwoorde vragen
         newDev: Developer overzicht
+        administrator: Administrator
         categories: Categorie overzicht
         answered: Mijn beantwoorde vragen
         profile:
@@ -97,9 +98,12 @@ profile:
         view: Bekijk
         delete: Verwijder
         noquestion: Er zijn geen onbeantwoorde vragen
+        nodev: Er zijn geen developers aangemeld
     invite:
         send-invite: Verzend uitnodiging
         notification: Email is verzonden!
+    developer:
+        add: Voeg developer toe
     answered:
         view: Bekijk
         edit: Bewerk
@@ -111,6 +115,8 @@ profile:
         infix: tussenvoegsel
         surname: Achternaam
         username: Gebruikersnaam
+        first_name: First name
+        last_name: Last name
     register:
         notification:
             name:

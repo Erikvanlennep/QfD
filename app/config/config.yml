@@ -97,3 +97,12 @@ knp_paginator:
     template:
         pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v3_pagination.html.twig'    # sliding pagination controls template
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig'                        # sort link template
+
+#Doctrine encrypt bundle
+vmelnik_doctrine_encrypt:
+# Secret key for encrypt algorithm. All secret key checks are encryptor tasks only.
+    secret_key:           05A491484529F6DDD43307DA9EB242E4 # Required
+#  Default and only one encryptor is aes256. If you want to provide your own - set encryptor_class
+    encryptor:            aes256
+#  Now it's only one db driver is supported - orm
+    db_driver:            orm
