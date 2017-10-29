@@ -97,6 +97,7 @@ class QuestionController extends Controller
      *
      * @Route("/delete/{question}", name="question_delete")
      * @ParamConverter("question", class="AppBundle:Question")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function deleteAction(Request $request, Question $question)
     {
@@ -116,6 +117,12 @@ class QuestionController extends Controller
         return $this->redirect($previousUrl);
     }
 
+    /**
+     * Create a delete form for the question
+     * @param Question $question
+     * @param $previousUrl
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     private function createDeleteForm(Question $question, $previousUrl)
     {
         $em = $this->getDoctrine()->getManager();

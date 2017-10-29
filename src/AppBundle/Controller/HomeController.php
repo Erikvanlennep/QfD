@@ -159,8 +159,10 @@ class HomeController extends Controller
      */
     private function createCreateForm(Question $entity)
     {
+        $url = 'question_index';
+
         $form = $this->createForm('AppBundle\Form\QuestionType', $entity, array(
-            'action' => $this->generateUrl('question_index'),
+            'action' => $this->generateUrl($url),
             'method' => 'POST',
         ));
 
