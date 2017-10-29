@@ -131,6 +131,7 @@ class QuestionController extends Controller
             return $this->redirect($previousUrl);
         } else {
             $question->setDeleted(true);
+            $question->setCategory(null);
             $em->persist($question);
             $em->flush();
             return $this->redirect($previousUrl);

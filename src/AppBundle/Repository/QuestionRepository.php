@@ -51,7 +51,8 @@ class QuestionRepository extends EntityRepository
 
     public function findBySearch($query){
         return $this->createQueryBuilder('q')
-            ->where('q.title LIKE :search OR q.question LIKE :search AND q.deleted = false')
+            ->where('q.title LIKE :search OR q.question LIKE :search')
+            ->andWhere('q.deleted = false')
             ->orderBy('q.date', 'DESC')
             ->setParameter('search', '%'.$query.'%')
             ->getQuery()
