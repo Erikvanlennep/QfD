@@ -48,4 +48,14 @@ class QuestionRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function findBySearch($query){
+        return $this->createQueryBuilder('q')
+            ->where('q.title LIKE :search OR q.question LIKE :search')
+            ->andWhere('q.deleted = false')
+            ->orderBy('q.date', 'DESC')
+            ->setParameter('search', '%'.$query.'%')
+            ->getQuery()
+            ->execute();
+    }
 }

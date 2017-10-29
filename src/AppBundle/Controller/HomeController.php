@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\QuestionService;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -151,6 +152,36 @@ class HomeController extends Controller
     }
 
     /**
+     * List of all values from the search function
+     *
+     * @Route("/search/{query}", name="question_search")
+     * @Template()
+     */
+    public function searcAction(Request $request, $query)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $questions = $em->getRepository('AppBundle:Question')->findBySearch($query);
+
+        $form = $this->filterForms($request);
+
+        return $this->render('question/question_main_template.html.twig', array(
+            'questions' => $questions,
+            'postform' => $form->createView(),
+            'user' => $user,
+        ));
+
+        $template = $this->forward($test)->getContent();
+
+        $json = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
      * Creates a form to create a Question entity.
      *
      * @param Question $entity The entity
@@ -159,8 +190,10 @@ class HomeController extends Controller
      */
     private function createCreateForm(Question $entity)
     {
+        $url = 'question_index';
+
         $form = $this->createForm('AppBundle\Form\QuestionType', $entity, array(
-            'action' => $this->generateUrl('question_index'),
+            'action' => $this->generateUrl($url),
             'method' => 'POST',
         ));
 

@@ -11,12 +11,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Category controller.
  *
  * @Route("profile/category")
- * @Security("has_role('ROLE_USER')")
+ * @Security("is_granted('ROLE_ADMIN')")
  */
 class CategoryController extends Controller
 {
@@ -85,9 +86,9 @@ class CategoryController extends Controller
     /**
      * Deletes a category entity.
      *
-     * @Route("/{id}", name="category_delete")
+     * @Route("/{id}/delete", name="category_delete")
      */
-    public function deleteAction(Category $category)
+    public function deleteAction(Request $request, Category $category)
     {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppBundle:Category')->find($category);
@@ -98,7 +99,7 @@ class CategoryController extends Controller
 
         $em->remove($entity);
         $em->flush();
-        return $this->redirectToRoute('category_index');
+        return $this->redirect($this->generateUrl('category_index'));
     }
 
 
