@@ -1,0 +1,14 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('fos_user_registration_register') }}" method="POST" class="fos_user_registration_register">
+    <div class="form-group" id="fos_user_registration_form">
+    {{ form_row(form.firstname) }}
+    {{ form_row(form.infix) }}
+    {{ form_row(form.lastname) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword.first) }}
+    {{ form_row(form.plainPassword.second) }}
+    {{ form_rest(form) }}
+        </div>
+        <button type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-default">{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}</button>
+</form>

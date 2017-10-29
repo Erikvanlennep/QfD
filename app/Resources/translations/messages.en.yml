@@ -1,0 +1,128 @@
+#Pages under view/Question, the QuestionController and the QuestionType
+question:
+    category:
+        edit: Edit
+        delete: Delete
+        label: Category
+        select:
+          message: Select a (different) category
+    detail:
+        claim: Claim
+        edit: Edit
+        buttons:
+            edit:
+                placeholder: Edit the question
+            delete:
+                placeholder: Delete the question
+        delete: Delete
+    girls:
+        message: There are no questions... yet
+        edit: Edit
+        delete: Delete
+    index:
+        edit: Edit
+        delete: Delete
+    order:
+        edit: Edit
+        delete: Delete
+    general:
+        edit: Bewerk
+        filter: Filter
+        create: Send
+    form:
+        question:
+            label: Explanation
+            placeholder: What is your question?
+        gender:
+            label: Gender
+            select:
+                man: Man
+                woman: Woman
+        city:
+            label: Residence
+            placeholder: Type your residence here (optional)
+        explanation:
+            placeholder: Explain your question some more
+        age:
+            label: Age
+        mail:
+            label: Email
+            placeholder: Type in your email here (optional)
+        category:
+            label: Category
+        title:
+            label: Question
+    buttons:
+        delete: Delete the question
+        edit: Edit the question
+    labels:
+        question: Question
+        explanation: Explanation
+        answer: Answer
+        devname: Answered by
+
+#Pages under view/Category, the CategoryController and the CategoryType
+category:
+    index:
+        edit: Edit
+        delete: Delete
+    edit:
+        back: Go back
+    general:
+        edit: Edit
+        create: Send
+        notification: Category has been added!
+    form:
+        add: Add category
+    delete:
+        notification: Category has been deleted!
+    message:
+        noquestion: Please select a (different) category
+
+#Pages under view/Profile, the ProfileController and the ProfileFormType
+profile:
+    menu:
+        unanswered: Unanswered questions
+        newDev: Developer overview
+        administrator: Administrator
+        categories: Category overview
+        answered: My answered questions
+        profile:
+            edit: Edit profile
+    general:
+        logout: Log out
+    index:
+        view: View
+        delete: Delete
+        noquestion: There are no unanswered questions
+        nodev: There are no developers registered
+    invite:
+        send-invite: Send invitation
+        notification: Email has been sent!
+    developer:
+        add: Voeg developer toe
+    answered:
+        view: View
+        edit: Edit
+        delete: Delete
+        noquestion: You haven't answered any questions yet
+    form:
+        name: Name
+        infix: infix
+        surname: Surname
+        username: Username
+        first_name: First name
+        last_name: Last name
+
+#base.html.twig file
+base:
+    menu:
+        top-answers: Top-answers
+        category: Category
+        new-answers: Newest answers
+        girls-only: Girls-only
+        profile: Profile
+        unanswered: unanswered
+    search:
+        placeholder: Search
+

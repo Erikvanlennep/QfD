@@ -1,0 +1,58 @@
+{% extends 'cms_layout.html.twig' %}
+
+{% block title %}Profile Answered{% endblock %}
+
+    {% block profileContent %}
+        <table class="records_list table table-condensed">
+            <thead>
+            <tr>
+                <th class="col-xs-12 col-md-10">{{ 'profile.menu.answered'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if questions is null %}
+                <tr><td>{{ 'profile.answered.noquestion'|trans }}</td></tr>
+            {% endif %}
+            {% for item in questions %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td class="text-right">
+                        <a href="{{ path('question_detail',{'question':item.id}) }}" title="{{ 'profile.answered.view' |trans }}">
+                            <button type="button" class="btn btn-flat btn-round">
+                                <i class="mdi-action-visibility"></i>
+                            </button>
+                        </a>
+                    </td>
+                    <td class="text-right">
+                        <a href="{{ path('question_edit',{'question':item.id}) }}" class="text-warning" title="{{ 'profile.answered.edit' |trans }}">
+                            <button type="button" class="btn btn-flat btn-round">
+                                <i class="mdi-content-create"></i>
+                            </button>
+                        </a>
+                    </td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <td class="text-right">
+                        <a href="{{ path('question_delete',{'question':item.id}) }}" class="text-danger" title="{{ 'profile.answered.delete' |trans }}">
+                            <button type="button" class="btn btn-flat btn-round btn-danger">
+                                <i class="mdi-action-delete"></i>
+                            </button>
+                        </a>
+                    </td>
+                        {% else %}
+                            <td class="text-right">
+                                {#<a href="{{ path('answer_delete',{'id':item.id}) }}" class="text-danger" title="{{ 'profile.answered.delete-answer' |trans }}">#}
+                                    {#<button type="button" class="btn btn-flat btn-round btn-danger">#}
+                                        {#unclaim#}
+                                    {#</button>#}
+                                {#</a>#}
+                            </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(questions) }}
+        </div>
+    {% endblock %}

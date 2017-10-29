@@ -1,13 +1,93 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Questions For Developers{% endblock %}</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <link href="{{ asset('public/css/style.css') }}" rel="stylesheet" type="text/css"/>
+    <script src="{{ asset('public/js/main.js') }}"></script>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <h1 class="title"><a href="{{ path('question_index') }}" class="home-link title">Questions for Developers</a></h1>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ path('question_index') }}">{{ 'base.menu.top-answers'|trans }}</a></li>
+                <li><a href="{{ path('question_categories') }}">{{ 'base.menu.category'|trans }}</a></li>
+                <li><a href="{{ path('question_newest') }}">{{ 'base.menu.new-answers'|trans }}</a></li>
+                <li><a href="{{ path('question_unanswered') }}">{{ 'base.menu.unanswered'|trans }}</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                {#<form class="navbar-form navbar-left" role="search">#}
+                    <div class="navbar-form navbar-left form-group">
+                        {#<input type="search" class="form-control" placeholder="{{ 'base.search.placeholder'| trans }}">#}
+                        <input id="searchForQuestions" type="search" class="form-control" placeholder="{{ 'base.search.placeholder'| trans }}">
+                        <a id="searchForQuestion2" href="{{ path('question_search', {'query': 'test'}) }}"><i class="mdi-action-search"></i></a>
+                    </div>
+                    {#<button type="submit" class="btn btn-default ask-btn">Submit</button>#}
+
+                {#</form>#}
+                <li><a href="{{ path('profile_index') }}"><i class="mdi-action-account-circle"></i></a></li>
+            </ul>
+        </div>
+
+
+    </div>
+</nav>
+
+{% block body %}
+    <div class="container-fluid">
+            <div id="main_info" class="col-md-8">
+                {% block content %}{% endblock %}
+            </div>
+
+            <div class="col-md-4">
+                <div class="jumbotron square">
+                    {% block sideContent %}{% endblock %}
+                </div>
+            </div>
+    </div>
+{% endblock %}
+
+
+
+{#Bootstrap scripts#}
+
+
+{% block javascripts %}{% endblock %}
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+
+</body>
+
+
 </html>

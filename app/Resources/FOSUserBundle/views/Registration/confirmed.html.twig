@@ -1,0 +1,20 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block profileContent %}
+ <h1>welkom bij Questions for Developers</h1>
+
+    <p>Vanaf hier kan je:</p>
+<ul class="list-group">
+    <li class="list-group-item">Vragen beantwoorden</li>
+    <li class="list-group-item">Jouw beantwoorde vragen inzien</li>
+    <li class="list-group-item">Je profiel bijwerken</li>
+</ul>
+
+    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    {% if targetUrl %}
+        <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+    {% endif %}
+
+{% endblock %}
